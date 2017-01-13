@@ -13,5 +13,8 @@ namespace Othello
         Colors color;
         int x;
         int y;
+
+
+        public Colors Color => color;
     }
 }
