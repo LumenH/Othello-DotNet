@@ -5,8 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Othello"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="453.975" Width="807.636">
     <Grid>
-        
+        <Border BorderBrush="Brown" BorderThickness="7" Margin="25,28,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="380" Width="380">
+        <Grid Height="367" Margin="0,0,0,0" VerticalAlignment="Top" ShowGridLines="True" Background="Green" Name="othelloBoard" HorizontalAlignment="Left" Width="367">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+        </Grid>
+        </Border>
+        <Label x:Name="label" Content="Player 1" HorizontalAlignment="Left" Height="30" Margin="457,44,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="label1" Content="Player 2" HorizontalAlignment="Left" Height="30" Margin="457,351,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.348,0.466"/>
+        <Label x:Name="timerPlayer2" Content="Timer" HorizontalAlignment="Left" Margin="601,351,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="timerPlayer1" Content="timer" HorizontalAlignment="Left" Margin="601,44,0,0" VerticalAlignment="Top" Width="100"/>
+        <Ellipse Fill="#FFFFFF" HorizontalAlignment="Left" Height="40" Margin="457,101,0,0" Stroke="Black" VerticalAlignment="Top" Width="40"/>
+        <Label x:Name="nbPawnPlayer1" Content="Label" HorizontalAlignment="Left" Margin="601,101,0,0" VerticalAlignment="Top"/>
+        <Ellipse Fill="#000000" HorizontalAlignment="Left" Height="40" Margin="457,277,0,0" Stroke="Black" VerticalAlignment="Top" Width="40"/>
+        <Label x:Name="nbPawnPlayer2" Content="Label" HorizontalAlignment="Left" Margin="601,277,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
