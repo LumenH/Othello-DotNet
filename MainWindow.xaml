@@ -102,21 +102,37 @@
                 <Rectangle Grid.Column="7" Grid.Row="7" Stroke="Black" Fill="Transparent"/>
             </Grid>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="2">
-            <Grid>
-                <Label x:Name="label" Content="Player 1" HorizontalAlignment="Left" Height="30" Margin="457,44,0,0" VerticalAlignment="Top" Width="100"/>
-                <Label x:Name="timerPlayer1" Content="timer" HorizontalAlignment="Left" Margin="601,44,0,0" VerticalAlignment="Top" Width="100"/>
-                <Ellipse Fill="#FFFFFF" HorizontalAlignment="Left" Height="40" Margin="457,101,0,0" Stroke="Black" VerticalAlignment="Top" Width="40"/>
-                <Label x:Name="nbPawnPlayer1" Content="Label" HorizontalAlignment="Left" Margin="601,101,0,0" VerticalAlignment="Top"/>
+        <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="161" Width="335" Margin="433,33,0,0">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label x:Name="label" Grid.Column="0" Grid.Row="0" Content="Player 1" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="100"/>
+                <Label x:Name="timerPlayer1" Grid.Column="1" Grid.Row="0" Content="timer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
+                <Ellipse Fill="#FFFFFF" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Height="40" Stroke="Black" VerticalAlignment="Top" Width="40"/>
+                <Label x:Name="nbPawnPlayer1" Grid.Column="1" Grid.Row="1" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </Grid>
         </Border>
         <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="433,247,0,0" Height="161" Width="335">
-            <StackPanel Margin="10">
-                <Ellipse Fill="#000000" HorizontalAlignment="Left" Height="40"  Stroke="Black" VerticalAlignment="Top" Width="40"/>
-                <Label x:Name="nbPawnPlayer2" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                <Label x:Name="label1" Content="Player 2" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.348,0.466"/>
-                <Label x:Name="timerPlayer2" Content="Timer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
-            </StackPanel>
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Ellipse Grid.Column="0" Grid.Row="0" Fill="#000000" HorizontalAlignment="Left" Height="40"  Stroke="Black" VerticalAlignment="Top" Width="40"/>
+                <Label x:Name="nbPawnPlayer2" Grid.Column="1" Grid.Row="0" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                <Label x:Name="label1" Grid.Column="0" Grid.Row="1" Content="Player 2" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.348,0.466"/>
+                <Label x:Name="timerPlayer2" Grid.Column="1" Grid.Row="1" Content="Timer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
+            </Grid>
         </Border>
         <Label x:Name="turn" Content="Player 1 turn" HorizontalAlignment="Left" Margin="458,194,0,0" VerticalAlignment="Top" FontSize="16"/>
     </Grid>
