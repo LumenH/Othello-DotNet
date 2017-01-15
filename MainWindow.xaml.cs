@@ -24,5 +24,17 @@ namespace Othello
         {
             InitializeComponent();
         }
+
+        private void mouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Ellipse ellipse = new Ellipse();
+            ellipse.Height = 40;
+            ellipse.Width = 40;
+            ellipse.Stroke = Brushes.Black;
+            ellipse.Fill = Brushes.Black;
+            othelloBoard.Children.Add(ellipse);
+            Grid.SetColumn(ellipse,Convert.ToInt32(e.GetPosition(othelloBoard).X));//Ne fais pas du tout ce que je veux
+            Grid.SetRow(ellipse, Convert.ToInt32(e.GetPosition(othelloBoard).Y));
+        }
     }
 }

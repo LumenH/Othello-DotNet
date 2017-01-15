@@ -29,68 +29,68 @@
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
-                <Rectangle Grid.Column="0" Grid.Row="0" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="0" Grid.Row="1" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="0" Grid.Row="2" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="0" Grid.Row="3" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="0" Grid.Row="4" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="0" Grid.Row="5" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="0" Grid.Row="6" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="0" Grid.Row="7" Stroke="Black" Fill="Transparent"/>
+                <Rectangle Grid.Column="0" Grid.Row="0" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="0" Grid.Row="1" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="0" Grid.Row="2" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="0" Grid.Row="3" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="0" Grid.Row="4" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="0" Grid.Row="5" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="0" Grid.Row="6" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="0" Grid.Row="7" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
 
-                <Rectangle Grid.Column="1" Grid.Row="0" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="1" Grid.Row="1" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="1" Grid.Row="2" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="1" Grid.Row="3" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="1" Grid.Row="4" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="1" Grid.Row="5" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="1" Grid.Row="6" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="1" Grid.Row="7" Stroke="Black" Fill="Transparent"/>
+                <Rectangle Grid.Column="1" Grid.Row="0" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="1" Grid.Row="1" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="1" Grid.Row="2" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="1" Grid.Row="3" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="1" Grid.Row="4" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="1" Grid.Row="5" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="1" Grid.Row="6" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="1" Grid.Row="7" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
 
-                <Rectangle Grid.Column="2" Grid.Row="0" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="2" Grid.Row="1" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="2" Grid.Row="2" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="2" Grid.Row="3" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="2" Grid.Row="4" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="2" Grid.Row="5" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="2" Grid.Row="6" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="2" Grid.Row="7" Stroke="Black" Fill="Transparent"/>
+                <Rectangle Grid.Column="2" Grid.Row="0" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="2" Grid.Row="1" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="2" Grid.Row="2" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="2" Grid.Row="3" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="2" Grid.Row="4" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="2" Grid.Row="5" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="2" Grid.Row="6" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="2" Grid.Row="7" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
 
-                <Rectangle Grid.Column="3" Grid.Row="0" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="3" Grid.Row="1" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="3" Grid.Row="2" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="3" Grid.Row="3" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="3" Grid.Row="4" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="3" Grid.Row="5" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="3" Grid.Row="6" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="3" Grid.Row="7" Stroke="Black" Fill="Transparent"/>
+                <Rectangle Grid.Column="3" Grid.Row="0" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="3" Grid.Row="1" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="3" Grid.Row="2" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="3" Grid.Row="3" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="3" Grid.Row="4" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="3" Grid.Row="5" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="3" Grid.Row="6" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="3" Grid.Row="7" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
 
-                <Rectangle Grid.Column="4" Grid.Row="0" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="4" Grid.Row="1" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="4" Grid.Row="2" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="4" Grid.Row="3" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="4" Grid.Row="4" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="4" Grid.Row="5" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="4" Grid.Row="6" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="4" Grid.Row="7" Stroke="Black" Fill="Transparent"/>
+                <Rectangle Grid.Column="4" Grid.Row="0" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="4" Grid.Row="1" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="4" Grid.Row="2" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="4" Grid.Row="3" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="4" Grid.Row="4" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="4" Grid.Row="5" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="4" Grid.Row="6" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="4" Grid.Row="7" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
 
-                <Rectangle Grid.Column="5" Grid.Row="0" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="5" Grid.Row="1" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="5" Grid.Row="2" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="5" Grid.Row="3" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="5" Grid.Row="4" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="5" Grid.Row="5" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="5" Grid.Row="6" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="5" Grid.Row="7" Stroke="Black" Fill="Transparent"/>
+                <Rectangle Grid.Column="5" Grid.Row="0" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="5" Grid.Row="1" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="5" Grid.Row="2" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="5" Grid.Row="3" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="5" Grid.Row="4" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="5" Grid.Row="5" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="5" Grid.Row="6" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="5" Grid.Row="7" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
 
-                <Rectangle Grid.Column="6" Grid.Row="0" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="6" Grid.Row="1" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="6" Grid.Row="2" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="6" Grid.Row="3" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="6" Grid.Row="4" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="6" Grid.Row="5" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="6" Grid.Row="6" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="6" Grid.Row="7" Stroke="Black" Fill="Transparent"/>
+                <Rectangle Grid.Column="6" Grid.Row="0" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="6" Grid.Row="1" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="6" Grid.Row="2" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="6" Grid.Row="3" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="6" Grid.Row="4" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="6" Grid.Row="5" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="6" Grid.Row="6" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="6" Grid.Row="7" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
 
                 <Rectangle Grid.Column="7" Grid.Row="0" Stroke="Black" Fill="Transparent"/>
                 <Rectangle Grid.Column="7" Grid.Row="1" Stroke="Black" Fill="Transparent"/>
