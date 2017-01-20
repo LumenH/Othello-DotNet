@@ -23,6 +23,10 @@ namespace Othello
         public MainWindow()
         {
             InitializeComponent();
+
+            LogicBoard logicBoard = new LogicBoard();
+            logicBoard.fillFakeBoard();
+            logicBoard.isPlayable(1, 2, true);
         }
     }
 }

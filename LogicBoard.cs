@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
@@ -13,9 +14,72 @@ namespace Othello
         const int HEIGHT = 8;
         Pawn[,] board = new Pawn[WIDTH, HEIGHT];
 
-        private void searchInDirection(int column, int line, int deltaX, int deltaY)
+        public void fillFakeBoard()
         {
-            
+            int[,] fake =
+            {
+                {0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0},
+                {0,0,2,2,2,1,0,0},
+                {0,0,2,0,0,0,0,0},
+                {0,0,0,2,0,0,0,0},
+                {0,0,0,0,2,0,0,0},
+                {0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0},
+            };
+
+            for (var i = 0; i < HEIGHT; i++)
+            {
+                for (var j = 0; j < WIDTH; j++)
+                {
+                    if (fake[i, j] != 0)
+                    {
+                        var color = fake[i, j] == 1 ? Pawn.Colors.Withe : Pawn.Colors.Black;
+                        board[i, j] = new Pawn(color, i, j);
+                    }
+                    else
+                    {
+                        board[i, j] = null;
+                    }
+                }
+            }
+        }
+
+        private bool searchInDirection(Pawn.Colors color,int column, int line, int deltaX, int deltaY)
+        {
+            var hit = false;
+            var stop = false;
+            while (!stop)
+            {
+                line += deltaY;
+                column += deltaX;
+
+                Console.WriteLine($"GOING TO LINE : {line} AND COLUMN {column}");
+
+                if (line >= HEIGHT || line < 0 || column >= WIDTH || column < 0)
+                {
+                    hit = false;
+                    stop = true;
+                }
+                else
+                {
+                    var currentPawn = board[line, column];
+
+                    if (currentPawn == null)
+                    {
+                        hit = false;
+                        stop = true;
+                    }
+
+                    else if (currentPawn.Color == color)
+                    {
+                        hit = true;
+                        stop = true;
+                    }
+                }
+            }
+
+            return hit;
         }
         
         public bool isPlayable(int column, int line, bool isWhite)
@@ -24,37 +88,41 @@ namespace Othello
             //check if we have the same color on the line or diag, without gaps
 
             //Position empty ?
-            if (board[line, column] != null)
+            if (board[line,column] != null)
                 return false;
 
-            bool validMove = false;
-
-            int numFlipped = 0;
-            int tempX = column, tempY = line;
             var ourColor = isWhite ? Pawn.Colors.Withe : Pawn.Colors.Black;
             var otherColor = isWhite ? Pawn.Colors.Black : Pawn.Colors.Withe;
 
-            int[,] deltas = new int[8,2]{
-                { 0, -1}, // North
-                { 0,  1}, // South
-                { -1, 0}, // west
-                { 1,  0}, // east
+            var currentPawn = new Pawn.Direction(x: column, y: line);
 
-                {-1, -1}, // north west
-                { 1,  1}, // south east
-                { 1, -1}, // north east
-                { -1, 1}, // south west
+            var directions = new Pawn.Direction[8]{
+                new Pawn.Direction( 0, -1), // North
+                new Pawn.Direction( 0,  1), // South
+                new Pawn.Direction(-1,  0), // west
+                new Pawn.Direction( 1,  0), // east
+
+                new Pawn.Direction(-1, -1), // north west
+                new Pawn.Direction( 1,  1), // south east
+                new Pawn.Direction( 1, -1), // north east
+                new Pawn.Direction(-1,  1), // south west
             };
 
-           
-            for(int i = 0 ; i < 8; i++)
+            var found = false;
+            foreach (var direction in directions)
             {
-                searchInDirection(tempX,tempY,deltas[i,0], deltas[i,1]);
+
+                if (!found && currentPawn.y < HEIGHT && currentPawn.y >= 0 && currentPawn.x < WIDTH && currentPawn.x > 0)
+                {
+                    found = searchInDirection(ourColor, currentPawn.x, currentPawn.y, direction.x,
+                    direction.y);
+                }
             }
 
 
 
-            return validMove;
+
+            return found;
         }
 
         public bool playMove(int column, int line, bool isWhite)

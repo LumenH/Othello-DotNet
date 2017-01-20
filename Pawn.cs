@@ -8,13 +8,44 @@ namespace Othello
 {
     class Pawn
     {
+        internal struct Direction
+        {
+            public int x, y;
+
+            public Direction(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+
+            public static Direction operator +(Direction d1, Direction d2)
+            {
+                var tmp = new Direction(x: d1.x, y: d1.y);
+                tmp.x += d2.x;
+                tmp.y += d2.y;
+                return tmp;
+            }
+        }
+
+        public Direction pos;
+
         public enum Colors {Withe, Black};
 
         Colors color;
-        int x;
-        int y;
-
+        
+        public Pawn(Colors color, int x, int y)
+        {
+            this.color = color;
+            pos = new Direction(x:x,y:y);
+        }
 
         public Colors Color => color;
+
+
+
+        public override string ToString()
+        {
+            return $"{color} {pos.x} {pos.y}";
+        }
     }
 }
