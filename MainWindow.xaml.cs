@@ -33,8 +33,12 @@ namespace Othello
             ellipse.Stroke = Brushes.Black;
             ellipse.Fill = Brushes.Black;
             othelloBoard.Children.Add(ellipse);
-            Grid.SetColumn(ellipse,Convert.ToInt32(e.GetPosition(othelloBoard).X));//Ne fais pas du tout ce que je veux
-            Grid.SetRow(ellipse, Convert.ToInt32(e.GetPosition(othelloBoard).Y));
+
+            var element = (UIElement)e.Source;
+            int c = Grid.GetColumn(element);
+            int r = Grid.GetRow(element);
+            Grid.SetColumn(ellipse,c);
+            Grid.SetRow(ellipse, r);
         }
     }
 }
