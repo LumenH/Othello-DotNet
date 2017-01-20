@@ -92,14 +92,14 @@
                 <Rectangle Grid.Column="6" Grid.Row="6" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
                 <Rectangle Grid.Column="6" Grid.Row="7" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
 
-                <Rectangle Grid.Column="7" Grid.Row="0" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="7" Grid.Row="1" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="7" Grid.Row="2" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="7" Grid.Row="3" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="7" Grid.Row="4" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="7" Grid.Row="5" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="7" Grid.Row="6" Stroke="Black" Fill="Transparent"/>
-                <Rectangle Grid.Column="7" Grid.Row="7" Stroke="Black" Fill="Transparent"/>
+                <Rectangle Grid.Column="7" Grid.Row="0" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="7" Grid.Row="1" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="7" Grid.Row="2" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="7" Grid.Row="3" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="7" Grid.Row="4" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="7" Grid.Row="5" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="7" Grid.Row="6" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
+                <Rectangle Grid.Column="7" Grid.Row="7" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
             </Grid>
         </Border>
         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="161" Width="335" Margin="433,33,0,0">

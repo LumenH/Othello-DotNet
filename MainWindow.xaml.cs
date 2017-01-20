@@ -27,11 +27,11 @@ namespace Othello
 
         private void mouseDown(object sender, MouseButtonEventArgs e)
         {
-            Ellipse ellipse = new Ellipse();
+            Ellipse ellipse = new Ellipse();//Avoir de pions à la place
             ellipse.Height = 40;
             ellipse.Width = 40;
             ellipse.Stroke = Brushes.Black;
-            ellipse.Fill = Brushes.Black;
+            ellipse.Fill = Brushes.Black;//Alterner les tours
             othelloBoard.Children.Add(ellipse);
 
             var element = (UIElement)e.Source;
