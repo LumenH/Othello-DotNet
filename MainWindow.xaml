@@ -6,8 +6,18 @@
         xmlns:local="clr-namespace:Othello"
         mc:Ignorable="d"
         Title="Othello" Height="453.975" Width="807.636" Loaded="loadWindow">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Options">
+                <MenuItem Header="_Save"/>
+                <MenuItem Header="_Load"/>
+                <Separator/>
+                <MenuItem Header="_Exit" Click="menuExitClick"/>
+            </MenuItem>
+        </Menu>
     <Viewbox>
-    <Grid>
+        
+        <Grid>
         <Border BorderBrush="Brown" BorderThickness="7" Margin="25,28,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="380" Width="380">
             <Grid Height="367" Margin="0,0,0,0" VerticalAlignment="Top" Background="Green" Name="othelloBoard" HorizontalAlignment="Left" Width="367">
                 <Grid.ColumnDefinitions>
@@ -138,4 +148,5 @@
         <Label x:Name="turn" Content="Player 1 turn" HorizontalAlignment="Left" Margin="458,194,0,0" VerticalAlignment="Top" FontSize="16px"/>
     </Grid>
     </Viewbox>
+    </DockPanel>
 </Window>

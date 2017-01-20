@@ -113,5 +113,10 @@ namespace Othello
             Grid.SetColumn(ellipseB1, 4);
             Grid.SetRow(ellipseB1, 3);
         }
+
+        private void menuExitClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
