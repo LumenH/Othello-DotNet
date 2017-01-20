@@ -122,7 +122,6 @@ namespace Othello
         private void menuExitClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
->>>>>>> b486d9ee1a6c9038f324c1b590d177ecd7bc51c4
         }
     }
 }
