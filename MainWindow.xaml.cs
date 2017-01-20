@@ -20,6 +20,7 @@ namespace Othello
     /// </summary>
     public partial class MainWindow : Window
     {
+        private int playerTurn = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -31,8 +32,17 @@ namespace Othello
             ellipse.Height = 40;
             ellipse.Width = 40;
             ellipse.Stroke = Brushes.Black;
-            ellipse.Fill = Brushes.Black;//Alterner les tours
+            if (playerTurn % 2 == 0)
+            {
+                ellipse.Fill = Brushes.Black;//Alterner les tours
+            }
+            else
+            {
+                ellipse.Fill = Brushes.White;//Alterner les tours
+            }
+            
             othelloBoard.Children.Add(ellipse);
+            playerTurn++;
 
             var element = (UIElement)e.Source;
             int c = Grid.GetColumn(element);
