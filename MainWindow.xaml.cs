@@ -21,9 +21,13 @@ namespace Othello
     public partial class MainWindow : Window
     {
         private int playerTurn = 0;
+        private int nbBlackPawn = 2;
+        private int nbWithPawn = 2;
         public MainWindow()
         {
             InitializeComponent();
+            nbPawnPlayer2.Content = Convert.ToString(nbBlackPawn);
+            nbPawnPlayer1.Content = Convert.ToString(nbWithPawn);
         }
 
         private void mouseDown(object sender, MouseButtonEventArgs e)
@@ -34,11 +38,19 @@ namespace Othello
             ellipse.Stroke = Brushes.Black;
             if (playerTurn % 2 == 0)
             {
+                //Les noirs sont le joueur 2
                 ellipse.Fill = Brushes.Black;
+                turn.Content = "Player 1 turn";
+                nbBlackPawn++;
+                nbPawnPlayer2.Content = Convert.ToString(nbBlackPawn);
             }
             else
             {
+                //Les blancs sont le joueur 1
                 ellipse.Fill = Brushes.White;
+                turn.Content = "Player 2 turn";
+                nbWithPawn++;
+                nbPawnPlayer1.Content = Convert.ToString(nbWithPawn);
             }
             
             othelloBoard.Children.Add(ellipse);
