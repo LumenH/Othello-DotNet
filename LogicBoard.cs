@@ -14,16 +14,22 @@ namespace Othello
         const int HEIGHT = 8;
         Pawn[,] board = new Pawn[WIDTH, HEIGHT];
 
+
+        public void addPawn(int x, int y, Pawn.Colors color )
+        {
+            board[y,x] = new Pawn(color, x, y);
+        }
+
         public void fillFakeBoard()
         {
             int[,] fake =
             {
                 {0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0},
-                {0,0,2,2,2,1,0,0},
-                {0,0,2,0,0,0,0,0},
-                {0,0,0,2,0,0,0,0},
-                {0,0,0,0,2,0,0,0},
+                {0,0,0,0,0,0,0,0},
+                {0,0,0,1,2,0,0,0},
+                {0,0,0,2,1,0,0,0},
+                {0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0},
                 {0,0,0,0,0,0,0,0},
             };
@@ -35,7 +41,7 @@ namespace Othello
                     if (fake[i, j] != 0)
                     {
                         var color = fake[i, j] == 1 ? Pawn.Colors.Withe : Pawn.Colors.Black;
-                        board[i, j] = new Pawn(color, i, j);
+                        board[i, j] = new Pawn(color, j, i);
                     }
                     else
                     {
@@ -45,16 +51,15 @@ namespace Othello
             }
         }
 
-        private bool searchInDirection(Pawn.Colors color,int column, int line, int deltaX, int deltaY)
+        private bool searchInDirection(Pawn.Colors color,int column, int line, int deltaX, int deltaY, List<Pawn> pawnsCrossed = null)
         {
             var hit = false;
             var stop = false;
+            var atLeastOne = false;
             while (!stop)
             {
                 line += deltaY;
                 column += deltaX;
-
-                Console.WriteLine($"GOING TO LINE : {line} AND COLUMN {column}");
 
                 if (line >= HEIGHT || line < 0 || column >= WIDTH || column < 0)
                 {
@@ -73,10 +78,21 @@ namespace Othello
 
                     else if (currentPawn.Color == color)
                     {
-                        hit = true;
+                        hit = atLeastOne;
                         stop = true;
                     }
+                    else
+                    {
+                        atLeastOne = true;
+                    }
+
+
+                    if (!stop)
+                    {
+                        pawnsCrossed?.Add(currentPawn);
+                    }
                 }
+
             }
 
             return hit;
@@ -111,16 +127,11 @@ namespace Othello
             var found = false;
             foreach (var direction in directions)
             {
-
                 if (!found && currentPawn.y < HEIGHT && currentPawn.y >= 0 && currentPawn.x < WIDTH && currentPawn.x > 0)
                 {
-                    found = searchInDirection(ourColor, currentPawn.x, currentPawn.y, direction.x,
-                    direction.y);
+                    found = searchInDirection(ourColor, currentPawn.x, currentPawn.y, direction.x,direction.y);
                 }
             }
-
-
-
 
             return found;
         }

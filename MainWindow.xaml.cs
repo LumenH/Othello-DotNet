@@ -23,14 +23,17 @@ namespace Othello
         private int playerTurn = 0;
         private int nbBlackPawn = 2;
         private int nbWithPawn = 2;
+        private LogicBoard logicBoard;
+
         public MainWindow()
         {
             InitializeComponent();
-            /*
-            LogicBoard logicBoard = new LogicBoard();
+            
+            
+            logicBoard = new LogicBoard();
             logicBoard.fillFakeBoard();
             logicBoard.isPlayable(1, 2, true);
-            */
+            
             nbPawnPlayer2.Content = Convert.ToString(nbBlackPawn);
             nbPawnPlayer1.Content = Convert.ToString(nbWithPawn);
         }
@@ -66,6 +69,8 @@ namespace Othello
             int r = Grid.GetRow(element);
             Grid.SetColumn(ellipse,c);
             Grid.SetRow(ellipse, r);
+            
+            logicBoard.addPawn(c,r,playerTurn%2 == 0 ? Pawn.Colors.Withe : Pawn.Colors.Black);
         }
 
         private void loadWindow(object sender, RoutedEventArgs e)
@@ -122,6 +127,18 @@ namespace Othello
         private void menuExitClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void OnBoardMouseMove(object sender, MouseEventArgs e)
+        {
+            var element = (UIElement)e.Source;
+            var x = Grid.GetColumn(element);
+            var y = Grid.GetRow(element);
+
+            var playable = logicBoard.isPlayable(x, y, playerTurn%2 != 0);
+
+            Console.WriteLine(playable);
+
         }
     }
 }
