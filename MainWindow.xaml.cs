@@ -21,110 +21,80 @@ namespace Othello
     public partial class MainWindow : Window
     {
         private int playerTurn = 0;
-        private int nbBlackPawn = 2;
-        private int nbWithPawn = 2;
         private LogicBoard logicBoard;
 
-        private SolidColorBrush playableColor = new SolidColorBrush(Color.FromRgb(0, 111, 111));
-        private SolidColorBrush regularColor = new SolidColorBrush(Colors.Green);
+        private readonly SolidColorBrush playableColor = new SolidColorBrush(Color.FromRgb(0, 111, 111));
+        private readonly SolidColorBrush regularColor = new SolidColorBrush(Colors.Green);
+
+        private List<Ellipse> pawns = new List<Ellipse>();
 
         public MainWindow()
         {
             InitializeComponent();
             
-            
             logicBoard = new LogicBoard();
             logicBoard.fillFakeBoard();
-            logicBoard.isPlayable(1, 2, true);
-            
-            nbPawnPlayer2.Content = Convert.ToString(nbBlackPawn);
-            nbPawnPlayer1.Content = Convert.ToString(nbWithPawn);
+            loadFromLogicBoard();
+
+            UpdateScore();
+        }
+
+        private void UpdateScore()
+        {
+            nbPawnPlayer2.Content = Convert.ToString(logicBoard.getBlackScore());
+            nbPawnPlayer1.Content = Convert.ToString(logicBoard.getBlackScore());
         }
 
         private void mouseDown(object sender, MouseButtonEventArgs e)
         {
-            Ellipse ellipse = new Ellipse();//Avoir de pions à la place
-            ellipse.Height = 40;
-            ellipse.Width = 40;
-            ellipse.Stroke = Brushes.Black;
-            if (playerTurn % 2 == 0)
-            {
-                //Les noirs sont le joueur 2
-                ellipse.Fill = Brushes.Black;
-                turn.Content = "Player 1 turn";
-                nbBlackPawn++;
-                nbPawnPlayer2.Content = Convert.ToString(nbBlackPawn);
-            }
-            else
-            {
-                //Les blancs sont le joueur 1
-                ellipse.Fill = Brushes.White;
-                turn.Content = "Player 2 turn";
-                nbWithPawn++;
-                nbPawnPlayer1.Content = Convert.ToString(nbWithPawn);
-            }
-            
-            othelloBoard.Children.Add(ellipse);
-            playerTurn++;
 
             var element = (UIElement)e.Source;
-            int c = Grid.GetColumn(element);
-            int r = Grid.GetRow(element);
-            Grid.SetColumn(ellipse,c);
-            Grid.SetRow(ellipse, r);
-            
-            logicBoard.addPawn(c,r,playerTurn%2 == 0 ? Pawn.Colors.Withe : Pawn.Colors.Black);
+            var c = Grid.GetColumn(element);
+            var r = Grid.GetRow(element);
+
+            var playable = logicBoard.isPlayable(c, r, playerTurn % 2 != 0);
+
+            if (playable)
+                logicBoard.playMove(c, r, playerTurn%2 != 0);
+
+            loadFromLogicBoard();
+            playerTurn++;
+            UpdateScore();
         }
 
         private void loadWindow(object sender, RoutedEventArgs e)
         {
-            //Première pièce blanche
-            Ellipse ellipseW = new Ellipse();
-            ellipseW.Height = 40;
-            ellipseW.Width = 40;
-            ellipseW.Stroke = Brushes.Black;
-            ellipseW.Fill = Brushes.White;
 
-            othelloBoard.Children.Add(ellipseW);
+        }
 
-            Grid.SetColumn(ellipseW, 3);
-            Grid.SetRow(ellipseW, 3);
+        private void loadFromLogicBoard()
+        {
+            pawns.ForEach(p => othelloBoard.Children.Remove(p));
+            pawns.Clear();
 
-            //Deuxième pièce blanche
-            Ellipse ellipseW1 = new Ellipse();
-            ellipseW1.Height = 40;
-            ellipseW1.Width = 40;
-            ellipseW1.Stroke = Brushes.Black;
-            ellipseW1.Fill = Brushes.White;
+            for (var i = 0; i < LogicBoard.HEIGHT; i++)
+            {
+                for (var j = 0; j < LogicBoard.WIDTH; j++)
+                {
+                    var value = logicBoard.Board[i, j];
 
-            othelloBoard.Children.Add(ellipseW1);
+                    if (value != null)
+                    {
+                        var ellipse = new Ellipse
+                        {
+                            Height = 40,
+                            Width = 40,
+                            Stroke = Brushes.Black,
+                            Fill = value.Color == Pawn.Colors.Withe ? Brushes.White : Brushes.Black
+                        };
+                        pawns.Add(ellipse);
 
-            Grid.SetColumn(ellipseW1, 4);
-            Grid.SetRow(ellipseW1, 4);
-
-            //Première pièce noire
-            Ellipse ellipseB = new Ellipse();
-            ellipseB.Height = 40;
-            ellipseB.Width = 40;
-            ellipseB.Stroke = Brushes.Black;
-            ellipseB.Fill = Brushes.Black;
-
-            othelloBoard.Children.Add(ellipseB);
-
-            Grid.SetColumn(ellipseB, 3);
-            Grid.SetRow(ellipseB, 4);
-
-            //Deuxième pièce noire
-            Ellipse ellipseB1 = new Ellipse();
-            ellipseB1.Height = 40;
-            ellipseB1.Width = 40;
-            ellipseB1.Stroke = Brushes.Black;
-            ellipseB1.Fill = Brushes.Black;
-
-            othelloBoard.Children.Add(ellipseB1);
-
-            Grid.SetColumn(ellipseB1, 4);
-            Grid.SetRow(ellipseB1, 3);
+                        Grid.SetColumn(ellipse, j);
+                        Grid.SetRow(ellipse, i);
+                    }
+                }
+            }
+            pawns.ForEach(p => othelloBoard.Children.Add(p));
         }
 
         private void menuExitClick(object sender, RoutedEventArgs e)
@@ -138,18 +108,18 @@ namespace Othello
 
             if (source == null) return;
 
-            var element = source;
-            var x = Grid.GetColumn(element);
-            var y = Grid.GetRow(element);
+            var rectHover = source;
+            var x = Grid.GetColumn(rectHover);
+            var y = Grid.GetRow(rectHover);
 
             var playable = logicBoard.isPlayable(x, y, playerTurn % 2 != 0);
 
-            othelloBoard.Children.Cast<UIElement>().ToList().Where(c => c is Rectangle).ToList().ForEach(c => (c as Rectangle).Fill = regularColor);
-
-            if (playable)
-            {
-                element.Fill = playableColor;
-            }
+            othelloBoard.Children.Cast<UIElement>()
+                .ToList()
+                .Where(c => c is Rectangle)
+                .Cast<Rectangle>()
+                .ToList()
+                .ForEach(c => c.Fill = c.Equals(rectHover) && playable ? playableColor : regularColor);
             
         }
     }

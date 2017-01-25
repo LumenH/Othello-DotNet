@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
 
@@ -10,14 +11,28 @@ namespace Othello
 {
     class LogicBoard : IPlayable
     {
-        const int WIDTH = 8;
-        const int HEIGHT = 8;
-        Pawn[,] board = new Pawn[WIDTH, HEIGHT];
+        public static int WIDTH => 8;
+        public static int HEIGHT => 8;
+
+        public Pawn[,] Board { get; set; } = new Pawn[WIDTH, HEIGHT];
+
+        readonly Pawn.Direction[] directions = new Pawn.Direction[8]{
+            new Pawn.Direction( 0, -1), // North
+            new Pawn.Direction( 0,  1), // South
+            new Pawn.Direction(-1,  0), // west
+            new Pawn.Direction( 1,  0), // east
+
+            new Pawn.Direction(-1, -1), // north west
+            new Pawn.Direction( 1,  1), // south east
+            new Pawn.Direction( 1, -1), // north east
+            new Pawn.Direction(-1,  1), // south west
+        };
+
 
 
         public void addPawn(int x, int y, Pawn.Colors color )
         {
-            board[y,x] = new Pawn(color, x, y);
+            Board[y,x] = new Pawn(color, x, y);
         }
 
         public void fillFakeBoard()
@@ -41,21 +56,22 @@ namespace Othello
                     if (fake[i, j] != 0)
                     {
                         var color = fake[i, j] == 1 ? Pawn.Colors.Withe : Pawn.Colors.Black;
-                        board[i, j] = new Pawn(color, j, i);
+                        Board[i, j] = new Pawn(color, j, i);
                     }
                     else
                     {
-                        board[i, j] = null;
+                        Board[i, j] = null;
                     }
                 }
             }
         }
 
-        private bool searchInDirection(Pawn.Colors color,int column, int line, int deltaX, int deltaY, List<Pawn> pawnsCrossed = null)
+        private bool SearchInDirection(Pawn.Colors color,int column, int line, int deltaX, int deltaY, ICollection<Pawn> pawnsCrossed = null)
         {
             var hit = false;
             var stop = false;
             var atLeastOne = false;
+
             while (!stop)
             {
                 line += deltaY;
@@ -68,7 +84,7 @@ namespace Othello
                 }
                 else
                 {
-                    var currentPawn = board[line, column];
+                    var currentPawn = Board[line, column];
 
                     if (currentPawn == null)
                     {
@@ -100,49 +116,42 @@ namespace Othello
         
         public bool isPlayable(int column, int line, bool isWhite)
         {
-            // https://user.xmission.com/~sgigo/elec/ocreversi/legalmoves.html
-            //check if we have the same color on the line or diag, without gaps
-
             //Position empty ?
-            if (board[line,column] != null)
+            if (Board[line,column] != null)
                 return false;
 
             var ourColor = isWhite ? Pawn.Colors.Withe : Pawn.Colors.Black;
-            var otherColor = isWhite ? Pawn.Colors.Black : Pawn.Colors.Withe;
 
             var currentPawn = new Pawn.Direction(x: column, y: line);
 
-            var directions = new Pawn.Direction[8]{
-                new Pawn.Direction( 0, -1), // North
-                new Pawn.Direction( 0,  1), // South
-                new Pawn.Direction(-1,  0), // west
-                new Pawn.Direction( 1,  0), // east
-
-                new Pawn.Direction(-1, -1), // north west
-                new Pawn.Direction( 1,  1), // south east
-                new Pawn.Direction( 1, -1), // north east
-                new Pawn.Direction(-1,  1), // south west
-            };
-
             var found = false;
-            foreach (var direction in directions)
+
+            directions.ToList().ForEach(direction =>
             {
                 if (!found && currentPawn.y < HEIGHT && currentPawn.y >= 0 && currentPawn.x < WIDTH && currentPawn.x > 0)
                 {
-                    found = searchInDirection(ourColor, currentPawn.x, currentPawn.y, direction.x,direction.y);
+                    found = SearchInDirection(ourColor, currentPawn.x, currentPawn.y, direction.x, direction.y);
                 }
-            }
+            });
 
             return found;
         }
 
         public bool playMove(int column, int line, bool isWhite)
         {
+            var color = isWhite ? Pawn.Colors.Withe : Pawn.Colors.Black;
 
-            
+            directions.ToList().ForEach(direction =>
+            {   
+                var pawnsCrossed = new List<Pawn>();
 
-            addPawn(column, line, isWhite ? Pawn.Colors.Withe : Pawn.Colors.Black);
+                var playable = SearchInDirection(color, column, line, direction.x, direction.y,pawnsCrossed);
 
+                if(playable)
+                    pawnsCrossed.ForEach(p => p.Flip());
+            });
+
+            addPawn(column, line, color);
 
             return false;
         }
@@ -151,15 +160,21 @@ namespace Othello
         {
             throw new NotImplementedException();
         }
+        
+        /*
+        public int getWhiteScore() => Board.Cast<Pawn>().Count(p => p?.Color == Pawn.Colors.Withe);
 
-        public int getWhiteScore()
-        {
-            throw new NotImplementedException();
-        }
+        public int getBlackScore() => Board.Cast<Pawn>().Count(p => p?.Color == Pawn.Colors.Black);
+        */
 
-        public int getBlackScore()
-        {
-            throw new NotImplementedException();
-        }
+        public int getWhiteScore() => (from pawn in Board.Cast<Pawn>()
+                                        where pawn?.Color == Pawn.Colors.Withe
+                                        select pawn).Count();
+        
+
+        public int getBlackScore() => (from pawn in Board.Cast<Pawn>()
+                                       where pawn?.Color == Pawn.Colors.Black
+                                       select pawn).Count();
+
     }
 }
