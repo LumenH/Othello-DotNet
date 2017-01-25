@@ -138,7 +138,13 @@ namespace Othello
 
         public bool playMove(int column, int line, bool isWhite)
         {
-            throw new NotImplementedException();
+
+            
+
+            addPawn(column, line, isWhite ? Pawn.Colors.Withe : Pawn.Colors.Black);
+
+
+            return false;
         }
 
         public Tuple<char, int> getNextMove(int[,] game, int level, bool whiteTurn)

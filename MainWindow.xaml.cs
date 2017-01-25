@@ -25,6 +25,9 @@ namespace Othello
         private int nbWithPawn = 2;
         private LogicBoard logicBoard;
 
+        private SolidColorBrush playableColor = new SolidColorBrush(Color.FromRgb(0, 111, 111));
+        private SolidColorBrush regularColor = new SolidColorBrush(Colors.Green);
+
         public MainWindow()
         {
             InitializeComponent();
@@ -131,14 +134,23 @@ namespace Othello
 
         private void OnBoardMouseMove(object sender, MouseEventArgs e)
         {
-            var element = (UIElement)e.Source;
+            var source = e.Source as Rectangle;
+
+            if (source == null) return;
+
+            var element = source;
             var x = Grid.GetColumn(element);
             var y = Grid.GetRow(element);
 
-            var playable = logicBoard.isPlayable(x, y, playerTurn%2 != 0);
+            var playable = logicBoard.isPlayable(x, y, playerTurn % 2 != 0);
 
-            Console.WriteLine(playable);
+            othelloBoard.Children.Cast<UIElement>().ToList().Where(c => c is Rectangle).ToList().ForEach(c => (c as Rectangle).Fill = regularColor);
 
+            if (playable)
+            {
+                element.Fill = playableColor;
+            }
+            
         }
     }
 }

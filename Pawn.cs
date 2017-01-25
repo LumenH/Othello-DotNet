@@ -41,7 +41,7 @@ namespace Othello
 
         public Colors Color => color;
 
-
+        public void Flip() => color = color == Colors.Withe ? Colors.Black : Colors.Withe;
 
         public override string ToString()
         {
