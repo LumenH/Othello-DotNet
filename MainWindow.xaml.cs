@@ -28,6 +28,8 @@ namespace Othello
 
         private List<Ellipse> pawns = new List<Ellipse>();
 
+        private System.IO.Stream stream;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -121,6 +123,32 @@ namespace Othello
                 .ToList()
                 .ForEach(c => c.Fill = c.Equals(rectHover) && playable ? playableColor : regularColor);
             
+        }
+
+        private void saveClick(object sender, RoutedEventArgs e)
+        {
+            stream = System.IO.File.Open("save.xml", System.IO.FileMode.Create);
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+            bformatter.Serialize(stream, logicBoard);
+            stream.Close();
+
+            MessageBox.Show("Sauvegarde réussie");
+        }
+
+        private void loadClick(object sender, RoutedEventArgs e)
+        {
+            logicBoard = null;
+
+            stream = System.IO.File.Open("save.xml", System.IO.FileMode.Open);
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+            logicBoard = (LogicBoard)bformatter.Deserialize(stream);
+            stream.Close();
+
+            MessageBox.Show("Load réussi");
+
+            loadFromLogicBoard();
         }
     }
 }
