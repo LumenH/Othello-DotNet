@@ -55,7 +55,7 @@ namespace Othello
                 {
                     if (fake[i, j] != 0)
                     {
-                        var color = fake[i, j] == 1 ? Pawn.Colors.Withe : Pawn.Colors.Black;
+                        var color = fake[i, j] == 1 ? Pawn.Colors.White : Pawn.Colors.Black;
                         Board[i, j] = new Pawn(color, j, i);
                     }
                     else
@@ -120,7 +120,7 @@ namespace Othello
             if (Board[line,column] != null)
                 return false;
 
-            var ourColor = isWhite ? Pawn.Colors.Withe : Pawn.Colors.Black;
+            var ourColor = isWhite ? Pawn.Colors.White : Pawn.Colors.Black;
 
             var currentPawn = new Pawn.Direction(x: column, y: line);
 
@@ -139,7 +139,7 @@ namespace Othello
 
         public bool playMove(int column, int line, bool isWhite)
         {
-            var color = isWhite ? Pawn.Colors.Withe : Pawn.Colors.Black;
+            var color = isWhite ? Pawn.Colors.White : Pawn.Colors.Black;
 
             directions.ToList().ForEach(direction =>
             {   
@@ -162,13 +162,13 @@ namespace Othello
         }
         
         /*
-        public int getWhiteScore() => Board.Cast<Pawn>().Count(p => p?.Color == Pawn.Colors.Withe);
+        public int getWhiteScore() => Board.Cast<Pawn>().Count(p => p?.Color == Pawn.Colors.White);
 
         public int getBlackScore() => Board.Cast<Pawn>().Count(p => p?.Color == Pawn.Colors.Black);
         */
 
         public int getWhiteScore() => (from pawn in Board.Cast<Pawn>()
-                                        where pawn?.Color == Pawn.Colors.Withe
+                                        where pawn?.Color == Pawn.Colors.White
                                         select pawn).Count();
         
 

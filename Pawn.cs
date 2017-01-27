@@ -29,7 +29,7 @@ namespace Othello
 
         public Direction pos;
 
-        public enum Colors {Withe, Black};
+        public enum Colors {White, Black};
 
         Colors color;
         
@@ -41,7 +41,7 @@ namespace Othello
 
         public Colors Color => color;
 
-        public void Flip() => color = color == Colors.Withe ? Colors.Black : Colors.Withe;
+        public void Flip() => color = color == Colors.White ? Colors.Black : Colors.White;
 
         public override string ToString()
         {

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,19 +14,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Othello.Annotations;
 
 namespace Othello
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private int playerTurn = 0;
+
         private LogicBoard logicBoard;
 
         private readonly SolidColorBrush playableColor = new SolidColorBrush(Color.FromRgb(0, 111, 111));
+
         private readonly SolidColorBrush regularColor = new SolidColorBrush(Colors.Green);
+
+        public int BlackScore => logicBoard.getBlackScore();
+
+        public int WhiteScore => logicBoard.getWhiteScore();
 
         private List<Ellipse> pawns = new List<Ellipse>();
 
@@ -36,14 +45,9 @@ namespace Othello
             logicBoard.fillFakeBoard();
             loadFromLogicBoard();
 
-            UpdateScore();
+            DataContext = this;
         }
-
-        private void UpdateScore()
-        {
-            nbPawnPlayer2.Content = Convert.ToString(logicBoard.getBlackScore());
-            nbPawnPlayer1.Content = Convert.ToString(logicBoard.getBlackScore());
-        }
+        
 
         private void mouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -59,12 +63,9 @@ namespace Othello
 
             loadFromLogicBoard();
             playerTurn++;
-            UpdateScore();
-        }
 
-        private void loadWindow(object sender, RoutedEventArgs e)
-        {
-
+            NotifyPropertyChanged("BlackScore");
+            NotifyPropertyChanged("WhiteScore");
         }
 
         private void loadFromLogicBoard()
@@ -85,7 +86,7 @@ namespace Othello
                             Height = 40,
                             Width = 40,
                             Stroke = Brushes.Black,
-                            Fill = value.Color == Pawn.Colors.Withe ? Brushes.White : Brushes.Black
+                            Fill = value.Color == Pawn.Colors.White ? Brushes.White : Brushes.Black
                         };
                         pawns.Add(ellipse);
 
@@ -121,6 +122,14 @@ namespace Othello
                 .ToList()
                 .ForEach(c => c.Fill = c.Equals(rectHover) && playable ? playableColor : regularColor);
             
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+
+        public void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
