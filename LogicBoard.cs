@@ -36,11 +36,6 @@ namespace Othello
 
         }
 
-        public LogicBoard()
-        {
-
-        }
-
 
         public void addPawn(int x, int y, Pawn.Colors color )
         {
@@ -200,9 +195,5 @@ namespace Othello
             //info.AddValue("Height", HEIGHT);
             //info.AddValue("Width", WIDTH);
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> f95cca8b2dfbcedbac3227329046e1b75776befd
     }
 }

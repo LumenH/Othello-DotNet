@@ -197,7 +197,17 @@ namespace Othello
         }
         private void saveClick(object sender, RoutedEventArgs e)
         {
-            save = new Save(logicBoard, whitePlayer, blackPlayer);
+
+            if(playerTurn%2 == 0)
+            {
+                //black is current player
+                save = new Save(logicBoard, blackPlayer, whitePlayer, playerTurn);
+            }
+            else
+            {
+                save = new Save(logicBoard, whitePlayer, blackPlayer, playerTurn);
+            }
+            
 
             stream = System.IO.File.Open("save.xml", System.IO.FileMode.Create);
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
@@ -219,8 +229,18 @@ namespace Othello
             stream.Close();
 
             logicBoard = save.Board;
-            whitePlayer = save.CurrentPlayer;
-            blackPlayer = save.Player2;
+            playerTurn = save.turn;
+
+            if(playerTurn%2 == 0)
+            {
+                blackPlayer = save.CurrentPlayer;
+                whitePlayer = save.Player2;
+            }
+            else
+            {
+                whitePlayer = save.CurrentPlayer;
+                blackPlayer = save.Player2;
+            }
 
             MessageBox.Show("Load réussi");
 
