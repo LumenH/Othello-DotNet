@@ -1,39 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Runtime.Remoting.Channels;
+using System.Timers;
+using System.Windows.Threading;
 using static Othello.Pawn;
 
 namespace Othello
 {
-    class Player
+    public class Player
     {
         string name;
-        Colors color;
-        Stopwatch clock;
+        Pawn.Colors color;
         TimeSpan maxTime = new TimeSpan(0, 30, 0);
-        TimeSpan timeLeft; 
+        TimeSpan timeLeft;
+        private bool timeMoving = false;
 
         public Player(string n, Colors c)
         {
             timeLeft = maxTime;
             name = n;
             color = c;
-            clock = new Stopwatch();
+            
         }
 
         public void start()
         {
-            clock.Start();
+            timeMoving = true;
         }
+
         public void stop()
         {
-            clock.Stop();
-            timeLeft = timeLeft.Subtract(clock.Elapsed);
+            timeMoving = false;
         }
-        //Getter
-        public TimeSpan TimeLeft => timeLeft;
+
+        public void tick()
+        {
+            if (timeMoving)
+                timeLeft = timeLeft.Subtract(TimeSpan.FromSeconds(1));
+        }
+        
+        public int SecondsLeft => (int) timeLeft.TotalSeconds;
+
+        public int MinutesLeft => (int) timeLeft.TotalMinutes;
     }
 }

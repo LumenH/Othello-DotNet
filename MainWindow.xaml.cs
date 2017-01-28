@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Othello.Annotations;
 
 namespace Othello
@@ -35,7 +36,19 @@ namespace Othello
 
         public int WhiteScore => logicBoard.getWhiteScore();
 
+        public string BlackTimeLeft => $"{blackPlayer.MinutesLeft} : {blackPlayer.SecondsLeft}";
+
+        public string WhiteTimeLeft => $"{whitePlayer.MinutesLeft} : {whitePlayer.SecondsLeft}";
+
+        public string CurrentTurn => $"Player {playerTurn} turn BITCH";
+
         private List<Ellipse> pawns = new List<Ellipse>();
+
+        private Player whitePlayer = new Player("WhitePlayer", Pawn.Colors.White);
+
+        private Player blackPlayer = new Player("BlackPlayer", Pawn.Colors.Black);
+
+        DispatcherTimer mainTimer = new DispatcherTimer();
 
         public MainWindow()
         {
@@ -44,8 +57,21 @@ namespace Othello
             logicBoard = new LogicBoard();
             logicBoard.fillFakeBoard();
             loadFromLogicBoard();
-
             DataContext = this;
+            mainTimer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 1)};
+
+            mainTimer.Tick += (sender, args) =>
+            {
+                whitePlayer.tick();
+                blackPlayer.tick();
+
+                NotifyPropertyChanged("WhiteTimeLeft");
+                NotifyPropertyChanged("BlackTimeLeft");
+            };
+
+            mainTimer.Start();
+
+            whitePlayer.start();
         }
         
 
@@ -59,13 +85,31 @@ namespace Othello
             var playable = logicBoard.isPlayable(c, r, playerTurn % 2 != 0);
 
             if (playable)
+            {
                 logicBoard.playMove(c, r, playerTurn%2 != 0);
 
-            loadFromLogicBoard();
-            playerTurn++;
+                loadFromLogicBoard();
 
-            NotifyPropertyChanged("BlackScore");
-            NotifyPropertyChanged("WhiteScore");
+                if (playerTurn%2 == 0)
+                {
+                    whitePlayer.stop();
+                    blackPlayer.start();
+                }
+                else
+                {
+                    blackPlayer.stop();
+                    whitePlayer.start();
+                }
+
+                playerTurn++;
+
+                NotifyPropertyChanged("BlackScore");
+                NotifyPropertyChanged("WhiteScore");
+                NotifyPropertyChanged("CurrrentTurn");
+
+            }
+
+            
         }
 
         private void loadFromLogicBoard()

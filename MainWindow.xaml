@@ -124,7 +124,7 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label x:Name="label" FontSize="16px" Grid.Column="0" Grid.Row="0" Content="Player 1" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="100"/>
-                <Label x:Name="timerPlayer1" FontSize="16px" Grid.Column="1" Grid.Row="0" Content="timer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
+                        <Label x:Name="timerPlayer1" FontSize="16px" Grid.Column="1" Grid.Row="0" Content="{Binding BlackTimeLeft, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
                 <Ellipse Fill="#FFFFFF" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Height="40" Stroke="Black" VerticalAlignment="Top" Width="40"/>
                         <Label x:Name="nbPawnPlayer1" FontSize="16px" Grid.Column="1" Grid.Row="1" Content="{Binding WhiteScore, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </Grid>
@@ -140,12 +140,12 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Ellipse Grid.Column="0" Grid.Row="0" Fill="#000000" HorizontalAlignment="Left" Height="40"  Stroke="Black" VerticalAlignment="Top" Width="40"/>
-                <Label x:Name="nbPawnPlayer2" FontSize="16px" Grid.Column="1" Grid.Row="0" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        <Label x:Name="nbPawnPlayer2" FontSize="16px" Grid.Column="1" Grid.Row="0" Content="{Binding WhiteTimeLeft, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" />
                 <Label x:Name="label1" FontSize="16px" Grid.Column="0" Grid.Row="1" Content="Player 2" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.348,0.466"/>
-                        <Label x:Name="timerPlayer2" FontSize="16px" Grid.Column="1" Grid.Row="1" Content="{Binding BlackScore, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
+                        <Label  x:Name="timerPlayer2" FontSize="16px" Grid.Column="1" Grid.Row="1" Content="{Binding BlackScore, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
             </Grid>
         </Border>
-        <Label x:Name="turn" Content="Player 1 turn" HorizontalAlignment="Left" Margin="458,194,0,0" VerticalAlignment="Top" FontSize="16px"/>
+                <Label x:Name="turn" Content="{Binding CurrentTurn, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="458,194,0,0" VerticalAlignment="Top" FontSize="16px"/>
     </Grid>
     </Viewbox>
     </DockPanel>

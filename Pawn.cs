@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Othello
 {
-    class Pawn
+    public class Pawn
     {
-        internal struct Direction
+        public struct Direction
         {
             public int x, y;
 
