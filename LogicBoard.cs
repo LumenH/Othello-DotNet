@@ -6,12 +6,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
-using System.Runtime.Serialization;
 
 namespace Othello
 {
-    [Serializable()]
-    class LogicBoard : IPlayable, ISerializable
+    class LogicBoard : IPlayable
     {
         public static int WIDTH => 8;
         public static int HEIGHT => 8;
@@ -30,10 +28,6 @@ namespace Othello
             new Pawn.Direction(-1,  1), // south west
         };
 
-        public LogicBoard()
-        {
-
-        }
 
 
         public void addPawn(int x, int y, Pawn.Colors color )
@@ -134,7 +128,7 @@ namespace Othello
 
             directions.ToList().ForEach(direction =>
             {
-                if (!found && currentPawn.y < HEIGHT && currentPawn.y >= 0 && currentPawn.x < WIDTH && currentPawn.x > 0)
+                if (!found && currentPawn.y < HEIGHT && currentPawn.y >= 0 && currentPawn.x < WIDTH && currentPawn.x >= 0)
                 {
                     found = SearchInDirection(ourColor, currentPawn.x, currentPawn.y, direction.x, direction.y);
                 }
@@ -166,12 +160,6 @@ namespace Othello
         {
             throw new NotImplementedException();
         }
-        
-        /*
-        public int getWhiteScore() => Board.Cast<Pawn>().Count(p => p?.Color == Pawn.Colors.White);
-
-        public int getBlackScore() => Board.Cast<Pawn>().Count(p => p?.Color == Pawn.Colors.Black);
-        */
 
         public int getWhiteScore() => (from pawn in Board.Cast<Pawn>()
                                         where pawn?.Color == Pawn.Colors.White
@@ -182,17 +170,5 @@ namespace Othello
                                        where pawn?.Color == Pawn.Colors.Black
                                        select pawn).Count();
 
-        public LogicBoard(SerializationInfo info, StreamingContext ctxt)
-        {
-            Board = (Pawn[,])info.GetValue("Board", typeof(Pawn[,]));
-            //HEIGHT = (int)info.GetValue("Height", typeof(int));
-
-        }
-        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
-        {
-            info.AddValue("Board", Board);
-            //info.AddValue("Height", HEIGHT);
-            //info.AddValue("Width", WIDTH);
-        }
     }
 }

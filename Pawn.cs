@@ -8,10 +8,10 @@ using System.Runtime.Serialization;
 namespace Othello
 {
     [Serializable()]
-    class Pawn: ISerializable
+    public class Pawn: ISerializable
     {
         [Serializable()]
-        internal struct Direction: ISerializable
+        public struct Direction: ISerializable
         {
             public int x, y;
 
