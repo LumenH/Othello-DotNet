@@ -50,13 +50,14 @@ namespace Othello
 
         private List<Ellipse> pawns = new List<Ellipse>();
         
-        private Player whitePlayer = new Player("WhitePlayer", Pawn.Colors.White);
+        public Player whitePlayer = new Player("WhitePlayer", Pawn.Colors.White);
 
-        private Player blackPlayer = new Player("BlackPlayer", Pawn.Colors.Black);
+        public Player blackPlayer = new Player("BlackPlayer", Pawn.Colors.Black);
 
         DispatcherTimer mainTimer = new DispatcherTimer();
 
         private System.IO.Stream stream;
+        public Save save;
 
         public MainWindow()
         {
@@ -226,10 +227,22 @@ namespace Othello
         }
         private void saveClick(object sender, RoutedEventArgs e)
         {
+
+            if(playerTurn%2 == 0)
+            {
+                //black is current player
+                save = new Save(logicBoard, blackPlayer, whitePlayer, playerTurn);
+            }
+            else
+            {
+                save = new Save(logicBoard, whitePlayer, blackPlayer, playerTurn);
+            }
+            
+
             stream = System.IO.File.Open("save.xml", System.IO.FileMode.Create);
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 
-            bformatter.Serialize(stream, logicBoard);
+            bformatter.Serialize(stream, save);
             stream.Close();
 
             MessageBox.Show("Sauvegarde réussie");
@@ -237,13 +250,27 @@ namespace Othello
 
         private void loadClick(object sender, RoutedEventArgs e)
         {
-            logicBoard = null;
+            save = null;
 
             stream = System.IO.File.Open("save.xml", System.IO.FileMode.Open);
             System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
 
-            logicBoard = (LogicBoard)bformatter.Deserialize(stream);
+             save = (Save)bformatter.Deserialize(stream);
             stream.Close();
+
+            logicBoard = save.Board;
+            playerTurn = save.turn;
+
+            if(playerTurn%2 == 0)
+            {
+                blackPlayer = save.CurrentPlayer;
+                whitePlayer = save.Player2;
+            }
+            else
+            {
+                whitePlayer = save.CurrentPlayer;
+                blackPlayer = save.Player2;
+            }
 
             MessageBox.Show("Load réussi");
 
