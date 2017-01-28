@@ -46,6 +46,8 @@ namespace Othello
                 timeLeft = timeLeft.Subtract(TimeSpan.FromSeconds(1));
         }
 
+        public int SecondsLeft => (int) timeLeft.Seconds;
+
         //Serialization
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -61,9 +63,7 @@ namespace Othello
             timeLeft = (TimeSpan)info.GetValue("TimeLeft", typeof(TimeSpan));
             timeMoving = (bool)info.GetValue("timeMoving", typeof(bool));
         }
-
-        public int SecondsLeft => (int) timeLeft.TotalSeconds;
-
-        public int MinutesLeft => (int) timeLeft.TotalMinutes;
+        
+        public int MinutesLeft => (int) timeLeft.Minutes;
     }
 }
