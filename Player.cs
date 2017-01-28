@@ -8,11 +8,13 @@ using System.Diagnostics;
 using System.Runtime.Remoting.Channels;
 using System.Timers;
 using System.Windows.Threading;
+using System.Runtime.Serialization;
 using static Othello.Pawn;
 
 namespace Othello
 {
-    public class Player
+    [Serializable()]
+    public class Player : ISerializable
     {
         string name;
         Pawn.Colors color;
@@ -43,7 +45,23 @@ namespace Othello
             if (timeMoving)
                 timeLeft = timeLeft.Subtract(TimeSpan.FromSeconds(1));
         }
-        
+
+        //Serialization
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Name",name);
+            info.AddValue("Color", color);
+            info.AddValue("TimeLeft", timeLeft);
+            info.AddValue("timeMoving", timeMoving);
+        }
+        public Player(SerializationInfo info, StreamingContext ctxt)
+        {
+            name = (string)info.GetValue("Name", typeof(string));
+            color = (Colors)info.GetValue("Color", typeof(Colors));
+            timeLeft = (TimeSpan)info.GetValue("TimeLeft", typeof(TimeSpan));
+            timeMoving = (bool)info.GetValue("timeMoving", typeof(bool));
+        }
+
         public int SecondsLeft => (int) timeLeft.TotalSeconds;
 
         public int MinutesLeft => (int) timeLeft.TotalMinutes;
