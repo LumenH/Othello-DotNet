@@ -136,7 +136,7 @@ namespace Othello
 
             directions.ToList().ForEach(direction =>
             {
-                if (!found && currentPawn.y < HEIGHT && currentPawn.y >= 0 && currentPawn.x < WIDTH && currentPawn.x > 0)
+                if (!found && currentPawn.y < HEIGHT && currentPawn.y >= 0 && currentPawn.x < WIDTH && currentPawn.x >= 0)
                 {
                     found = SearchInDirection(ourColor, currentPawn.x, currentPawn.y, direction.x, direction.y);
                 }
