@@ -78,6 +78,11 @@ namespace Othello
 
                 NotifyPropertyChanged("WhiteTimeLeft");
                 NotifyPropertyChanged("BlackTimeLeft");
+
+               if(IsGameFinished())
+                {
+                    EndGame();
+                }
             };
 
             mainTimer.Start();
@@ -112,10 +117,10 @@ namespace Othello
                 }
 
 
-                if (IsGameFinished())
+              /*  if (IsGameFinished())
                 {
                     EndGame();
-                }
+                }*/
 
                 playerTurn++;
 
@@ -205,6 +210,7 @@ namespace Othello
         {
             var winner = logicBoard.getWhiteScore() < logicBoard.getBlackScore() ? "Black" : "White";
             System.Windows.MessageBox.Show($"{winner} has won !", "End of game");
+            mainTimer.Stop();
         }
 
         public void RestartGame()
@@ -215,7 +221,8 @@ namespace Othello
         public bool IsGameFinished()
         {
             return (!CanPlayerPlay(playerTurn) && !CanPlayerPlay(playerTurn + 1))
-                || logicBoard.Board.Cast<Pawn>().ToList().Count(p => p == null) == 0;
+                //|| logicBoard.Board.Cast<Pawn>().ToList().Count(p => p == null) == 0 
+                 || whitePlayer.TotalSecondsLeft <= 0 || blackPlayer.TotalSecondsLeft <=0 ;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
