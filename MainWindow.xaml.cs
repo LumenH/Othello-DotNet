@@ -43,16 +43,13 @@ namespace Othello
         public string CurrentTurn => $"Player {playerTurn} turn BITCH";
 
         private List<Ellipse> pawns = new List<Ellipse>();
-
-<<<<<<< HEAD
+        
         private Player whitePlayer = new Player("WhitePlayer", Pawn.Colors.White);
 
         private Player blackPlayer = new Player("BlackPlayer", Pawn.Colors.Black);
 
         DispatcherTimer mainTimer = new DispatcherTimer();
-=======
         private System.IO.Stream stream;
->>>>>>> ed4d6c607fe8a38a6bcee4663c45096323559696
 
         public MainWindow()
         {
