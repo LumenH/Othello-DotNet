@@ -55,6 +55,8 @@ namespace Othello
 
         public Colors Color => color;
 
+        public bool IsWhite => color == Colors.White;
+
         public void Flip() => color = color == Colors.White ? Colors.Black : Colors.White;
 
         public override string ToString()

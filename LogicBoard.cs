@@ -9,7 +9,8 @@ using System.Windows.Media.Media3D;
 
 namespace Othello
 {
-    class LogicBoard : IPlayable
+    [Serializable()]
+    class LogicBoard : IPlayable, ISerializable
     {
         public static int WIDTH => 8;
         public static int HEIGHT => 8;
@@ -28,6 +29,11 @@ namespace Othello
             new Pawn.Direction(-1,  1), // south west
         };
 
+
+        public LogicBoard()
+        {
+
+        }
 
 
         public void addPawn(int x, int y, Pawn.Colors color )
@@ -169,6 +175,19 @@ namespace Othello
         public int getBlackScore() => (from pawn in Board.Cast<Pawn>()
                                        where pawn?.Color == Pawn.Colors.Black
                                        select pawn).Count();
+
+        public LogicBoard(SerializationInfo info, StreamingContext ctxt)
+        {
+            Board = (Pawn[,])info.GetValue("Board", typeof(Pawn[,]));
+            //HEIGHT = (int)info.GetValue("Height", typeof(int));
+
+        }
+        public void GetObjectData(SerializationInfo info, StreamingContext ctxt)
+        {
+            info.AddValue("Board", Board);
+            //info.AddValue("Height", HEIGHT);
+            //info.AddValue("Width", WIDTH);
+        }
 
     }
 }
