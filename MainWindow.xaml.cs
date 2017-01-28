@@ -44,11 +44,15 @@ namespace Othello
 
         private List<Ellipse> pawns = new List<Ellipse>();
 
+<<<<<<< HEAD
         private Player whitePlayer = new Player("WhitePlayer", Pawn.Colors.White);
 
         private Player blackPlayer = new Player("BlackPlayer", Pawn.Colors.Black);
 
         DispatcherTimer mainTimer = new DispatcherTimer();
+=======
+        private System.IO.Stream stream;
+>>>>>>> ed4d6c607fe8a38a6bcee4663c45096323559696
 
         public MainWindow()
         {
@@ -167,13 +171,38 @@ namespace Othello
                 .ForEach(c => c.Fill = c.Equals(rectHover) && playable ? playableColor : regularColor);
             
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
         
+        public event PropertyChangedEventHandler PropertyChanged;
+
 
         public void NotifyPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private void saveClick(object sender, RoutedEventArgs e)
+        {
+            stream = System.IO.File.Open("save.xml", System.IO.FileMode.Create);
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+            bformatter.Serialize(stream, logicBoard);
+            stream.Close();
+
+            MessageBox.Show("Sauvegarde réussie");
+        }
+
+        private void loadClick(object sender, RoutedEventArgs e)
+        {
+            logicBoard = null;
+
+            stream = System.IO.File.Open("save.xml", System.IO.FileMode.Open);
+            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+            logicBoard = (LogicBoard)bformatter.Deserialize(stream);
+            stream.Close();
+
+            MessageBox.Show("Load réussi");
+
+            loadFromLogicBoard();
         }
     }
 }
