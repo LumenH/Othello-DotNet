@@ -103,11 +103,17 @@ namespace Othello
                     whitePlayer.start();
                 }
 
-                playerTurn++;
+
+                if (CanPlayerPlay())
+                    playerTurn++;
+                else
+                    Console.WriteLine("Humm seems that you can't play !");
 
                 NotifyPropertyChanged("BlackScore");
                 NotifyPropertyChanged("WhiteScore");
                 NotifyPropertyChanged("CurrrentTurn");
+
+
 
             }
 
@@ -170,6 +176,18 @@ namespace Othello
             
         }
         
+
+        public bool CanPlayerPlay()
+        {
+            return othelloBoard.Children.Cast<UIElement>()
+                .ToList()
+                .Where(c => c is Rectangle)
+                .Cast<Rectangle>()
+                .ToList()
+                .Where(c => logicBoard.Board[Grid.GetRow(c), Grid.GetColumn(c)] == null)
+                .Where(c => logicBoard.isPlayable(Grid.GetColumn(c), Grid.GetRow(c), playerTurn%2 != 0)).Count() > 0;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
 

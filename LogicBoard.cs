@@ -12,6 +12,7 @@ namespace Othello
 {
     [Serializable()]
      public class LogicBoard : IPlayable, ISerializable
+
     {
         public static int WIDTH => 8;
         public static int HEIGHT => 8;
@@ -29,6 +30,11 @@ namespace Othello
             new Pawn.Direction( 1, -1), // north east
             new Pawn.Direction(-1,  1), // south west
         };
+
+        public LogicBoard()
+        {
+
+        }
 
         public LogicBoard()
         {
@@ -194,5 +200,9 @@ namespace Othello
             //info.AddValue("Height", HEIGHT);
             //info.AddValue("Width", WIDTH);
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> f95cca8b2dfbcedbac3227329046e1b75776befd
     }
 }
