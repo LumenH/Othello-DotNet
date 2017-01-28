@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Othello.Annotations;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Othello
 {
@@ -121,7 +123,7 @@ namespace Othello
                 if (!CanPlayerPlay(playerTurn))
                 {
                     playerTurn++;
-                    MessageBox.Show("You can not play this turn");
+                    System.Windows.MessageBox.Show("You can not play this turn");
                 }
 
                 Console.WriteLine($" player turn is {playerTurn}");
@@ -129,7 +131,6 @@ namespace Othello
                 NotifyPropertyChanged("BlackScore");
                 NotifyPropertyChanged("WhiteScore");
                 NotifyPropertyChanged("CurrentTurn");
-
 
             }
         }
@@ -166,10 +167,10 @@ namespace Othello
 
         private void menuExitClick(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            System.Windows.Application.Current.Shutdown();
         }
 
-        private void OnBoardMouseMove(object sender, MouseEventArgs e)
+        private void OnBoardMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             var source = e.Source as Rectangle;
 
@@ -204,7 +205,7 @@ namespace Othello
         public void EndGame()
         {
             var winner = logicBoard.getWhiteScore() < logicBoard.getBlackScore() ? "Black" : "White";
-            MessageBox.Show($"{winner} has won !", "End of game");
+            System.Windows.MessageBox.Show($"{winner} has won !", "End of game");
         }
 
         public void RestartGame()
@@ -237,44 +238,74 @@ namespace Othello
             {
                 save = new Save(logicBoard, whitePlayer, blackPlayer, playerTurn);
             }
+
+            SaveFileDialog Filedialog = new SaveFileDialog();
+            Filedialog.DefaultExt = ".xml";
+            Filedialog.Filter = "XML documents (.xml)|*.xml";
+            System.Windows.Forms.DialogResult result = Filedialog.ShowDialog();
+            if(result == System.Windows.Forms.DialogResult.OK)
+            {
+                string fileName = Filedialog.FileName;
+                stream = System.IO.File.Open(fileName, System.IO.FileMode.Create);
+                System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                bformatter.Serialize(stream, save);
+                stream.Close();
+
+                System.Windows.MessageBox.Show("Sauvegarde réussie");
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Sauvegarde échouée, aucun fichier n'a été choisi");
+            }
+
             
-
-            stream = System.IO.File.Open("save.xml", System.IO.FileMode.Create);
-            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
-            bformatter.Serialize(stream, save);
-            stream.Close();
-
-            MessageBox.Show("Sauvegarde réussie");
         }
 
         private void loadClick(object sender, RoutedEventArgs e)
         {
             save = null;
+            OpenFileDialog dgl = new OpenFileDialog();
+            dgl.DefaultExt = ".xml";
+            dgl.Filter = "XML Documents (.xml)|*.xml";
 
-            stream = System.IO.File.Open("save.xml", System.IO.FileMode.Open);
-            System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-
-             save = (Save)bformatter.Deserialize(stream);
-            stream.Close();
-
-            logicBoard = save.Board;
-            playerTurn = save.turn;
-
-            if(playerTurn%2 == 0)
+            DialogResult result = dgl.ShowDialog();
+            if(result == System.Windows.Forms.DialogResult.OK)
             {
-                blackPlayer = save.CurrentPlayer;
-                whitePlayer = save.Player2;
+                string file = dgl.FileName;
+
+                stream = System.IO.File.Open(file, System.IO.FileMode.Open);
+                System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bformatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+
+                save = (Save)bformatter.Deserialize(stream);
+                stream.Close();
+
+                logicBoard = save.Board;
+                playerTurn = save.turn;
+
+                if (playerTurn % 2 == 0)
+                {
+                    blackPlayer = save.CurrentPlayer;
+                    whitePlayer = save.Player2;
+                }
+                else
+                {
+                    whitePlayer = save.CurrentPlayer;
+                    blackPlayer = save.Player2;
+                }
+
+                System.Windows.MessageBox.Show("Chargement réussi");
+
+                loadFromLogicBoard();
+                NotifyPropertyChanged("BlackScore");
+                NotifyPropertyChanged("WhiteScore");
+                NotifyPropertyChanged("CurrentTurn");
             }
             else
             {
-                whitePlayer = save.CurrentPlayer;
-                blackPlayer = save.Player2;
+                System.Windows.MessageBox.Show("Chargement échoué, pas de fichier spécifié");
             }
-
-            MessageBox.Show("Load réussi");
-
-            loadFromLogicBoard();
+           
         }
     }
 }
