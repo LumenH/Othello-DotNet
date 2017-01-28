@@ -32,6 +32,9 @@ namespace Othello
 
         private readonly SolidColorBrush regularColor = new SolidColorBrush(Colors.Green);
 
+
+
+
         public int BlackScore => logicBoard.getBlackScore();
 
         public int WhiteScore => logicBoard.getWhiteScore();
@@ -40,7 +43,10 @@ namespace Othello
 
         public string WhiteTimeLeft => $"{whitePlayer.MinutesLeft} : {whitePlayer.SecondsLeft}";
 
-        public string CurrentTurn => $"Player {playerTurn} turn BITCH";
+        public string CurrentTurn => $"Player {(playerTurn%2 == 0 ? "black" : "white")} turn";
+
+
+
 
         private List<Ellipse> pawns = new List<Ellipse>();
         
@@ -49,6 +55,7 @@ namespace Othello
         private Player blackPlayer = new Player("BlackPlayer", Pawn.Colors.Black);
 
         DispatcherTimer mainTimer = new DispatcherTimer();
+
         private System.IO.Stream stream;
 
         public MainWindow()
@@ -103,20 +110,27 @@ namespace Othello
                 }
 
 
-                if (CanPlayerPlay())
+                if (IsGameFinished())
+                {
+                    EndGame();
+                }
+
+                playerTurn++;
+
+                if (!CanPlayerPlay(playerTurn))
+                {
                     playerTurn++;
-                else
-                    Console.WriteLine("Humm seems that you can't play !");
+                    MessageBox.Show("You can not play this turn");
+                }
+
+                Console.WriteLine($" player turn is {playerTurn}");
 
                 NotifyPropertyChanged("BlackScore");
                 NotifyPropertyChanged("WhiteScore");
-                NotifyPropertyChanged("CurrrentTurn");
-
+                NotifyPropertyChanged("CurrentTurn");
 
 
             }
-
-            
         }
 
         private void loadFromLogicBoard()
@@ -171,20 +185,36 @@ namespace Othello
                 .Where(c => c is Rectangle)
                 .Cast<Rectangle>()
                 .ToList()
-                .ForEach(c => c.Fill = c.Equals(rectHover) && playable ? playableColor : regularColor);
-            
+                .ForEach(c => c.Fill = c.Equals(rectHover) && playable ? playableColor : regularColor);    
         }
         
 
-        public bool CanPlayerPlay()
+        public bool CanPlayerPlay(int playerTurn)
         {
             return othelloBoard.Children.Cast<UIElement>()
                 .ToList()
                 .Where(c => c is Rectangle)
                 .Cast<Rectangle>()
                 .ToList()
-                .Where(c => logicBoard.Board[Grid.GetRow(c), Grid.GetColumn(c)] == null)
-                .Where(c => logicBoard.isPlayable(Grid.GetColumn(c), Grid.GetRow(c), playerTurn%2 != 0)).Count() > 0;
+                .Where(c => logicBoard.Board[Grid.GetRow(c), Grid.GetColumn(c)] == null) // Are there opened gaps ?
+                .Where(c => logicBoard.isPlayable(Grid.GetColumn(c), Grid.GetRow(c), playerTurn%2 != 0)).Count() > 0; //if yes, are they playable ?
+        }
+
+        public void EndGame()
+        {
+            var winner = logicBoard.getWhiteScore() < logicBoard.getBlackScore() ? "Black" : "White";
+            MessageBox.Show($"{winner} has won !", "End of game");
+        }
+
+        public void RestartGame()
+        {
+
+        }
+
+        public bool IsGameFinished()
+        {
+            return (!CanPlayerPlay(playerTurn) && !CanPlayerPlay(playerTurn + 1))
+                || logicBoard.Board.Cast<Pawn>().ToList().Count(p => p == null) == 0;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

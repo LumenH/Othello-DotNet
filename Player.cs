@@ -44,8 +44,8 @@ namespace Othello
                 timeLeft = timeLeft.Subtract(TimeSpan.FromSeconds(1));
         }
         
-        public int SecondsLeft => (int) timeLeft.TotalSeconds;
+        public int SecondsLeft => (int) timeLeft.Seconds;
 
-        public int MinutesLeft => (int) timeLeft.TotalMinutes;
+        public int MinutesLeft => (int) timeLeft.Minutes;
     }
 }
