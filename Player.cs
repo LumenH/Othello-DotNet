@@ -18,8 +18,8 @@ namespace Othello
     {
         string name;
         Pawn.Colors color;
-        TimeSpan maxTime = new TimeSpan(0, 30, 0);
-        TimeSpan timeLeft;
+        TimeSpan maxTime = new TimeSpan(0, 1, 0);
+        public TimeSpan timeLeft;
         private bool timeMoving = false;
 
         public Player(string n, Colors c)
@@ -47,6 +47,7 @@ namespace Othello
         }
 
         public int SecondsLeft => (int) timeLeft.Seconds;
+        public int TotalSecondsLeft => (int)timeLeft.TotalSeconds;
 
         //Serialization
         public void GetObjectData(SerializationInfo info, StreamingContext context)
