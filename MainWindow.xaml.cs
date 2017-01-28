@@ -81,8 +81,7 @@ namespace Othello
             };
 
             mainTimer.Start();
-
-            whitePlayer.start();
+            
         }
         
 
@@ -103,13 +102,13 @@ namespace Othello
 
                 if (playerTurn%2 == 0)
                 {
-                    whitePlayer.stop();
-                    blackPlayer.start();
+                    whitePlayer.start();
+                    blackPlayer.stop();
                 }
                 else
                 {
-                    blackPlayer.stop();
-                    whitePlayer.start();
+                    blackPlayer.start();
+                    whitePlayer.stop();
                 }
 
 

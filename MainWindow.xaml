@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Othello"
         mc:Ignorable="d"
-        Title="Othello" Height="453.975" Width="807.636">
+        Title="Othello" Height="407.975" Width="807.636">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Options">
@@ -16,14 +16,34 @@
             </MenuItem>
         </Menu>
         <Viewbox>
-
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition Width="379*"/>
+                    <ColumnDefinition Width="5*"/>
                 </Grid.ColumnDefinitions>
-                <Border BorderBrush="Brown" BorderThickness="7" Margin="14.926,28,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="380" Width="380" MouseMove="OnBoardMouseMove" Grid.Column="1">
-                    <Grid Height="367" Margin="0,0,0,0" VerticalAlignment="Top" Background="Green" Name="othelloBoard" HorizontalAlignment="Left" Width="367">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="5*"/>
+                </Grid.RowDefinitions>
+                <Label x:Name="turn" Content="{Binding CurrentTurn, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="24" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" FontWeight="Bold" />
+                <Border BorderBrush="Black" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top"  Height="400" Width="335" Grid.Column="0" Grid.Row="1">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Ellipse Grid.Column="0" Grid.Row="0" Fill="White" HorizontalAlignment="Center" Height="100"  Stroke="Black" VerticalAlignment="Top" Width="100"/>
+                        <Label  FontSize="48" Grid.Column="0" Grid.Row="2" Content="{Binding WhiteTimeLeft, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Label  FontSize="72" Grid.Column="0" Grid.Row="1" Content="{Binding WhiteScore, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </Border>
+                <Border BorderBrush="Brown" BorderThickness="7"  VerticalAlignment="Top" HorizontalAlignment="Center" Height="380" Width="380" MouseMove="OnBoardMouseMove" Grid.Row="1" Grid.Column="1">
+                    <Grid Height="367" Margin="0,0,0,0" VerticalAlignment="Top" Background="Green" Name="othelloBoard" HorizontalAlignment="Center" Width="367">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
@@ -117,40 +137,23 @@
                         <Rectangle Grid.Column="7" Grid.Row="7" Stroke="Black" Fill="Transparent" MouseDown="mouseDown"/>
                     </Grid>
                 </Border>
-                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="161" Width="335" Margin="422.926,33,0,0" Grid.Column="1">
+
+                <Border BorderBrush="Black" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top"  Height="400" Width="335" Grid.Column="2" Grid.Row="1">
                     <Grid Margin="10">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Label x:Name="label" FontSize="16px" Grid.Column="0" Grid.Row="0" Content="Player 1" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="100"/>
-                        <Label x:Name="timerPlayer1" FontSize="16px" Grid.Column="1" Grid.Row="0" Content="{Binding BlackTimeLeft, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
-                        <Ellipse Fill="#FFFFFF" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Height="40" Stroke="Black" VerticalAlignment="Top" Width="40"/>
-                        <Label x:Name="nbPawnPlayer1" FontSize="16px" Grid.Column="1" Grid.Row="1" Content="{Binding WhiteScore, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                    </Grid>
-                </Border>
-                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="422.926,240,0,0" Height="161" Width="335" Grid.Column="1">
-                    <Grid Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition></RowDefinition>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Ellipse Grid.Column="0" Grid.Row="0" Fill="#000000" HorizontalAlignment="Left" Height="40"  Stroke="Black" VerticalAlignment="Top" Width="40"/>
-                        <Label x:Name="nbPawnPlayer2" FontSize="16px" Grid.Column="1" Grid.Row="0" Content="{Binding WhiteTimeLeft, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" />
-                        <Label x:Name="label1" FontSize="16px" Grid.Column="0" Grid.Row="1" Content="Player 2" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.348,0.466"/>
-                        <Label  x:Name="timerPlayer2" FontSize="16px" Grid.Column="1" Grid.Row="1" Content="{Binding BlackScore, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"/>
+                        <Ellipse Grid.Column="0" Grid.Row="0" Fill="#000000" HorizontalAlignment="Center" Height="100"  Stroke="Black" VerticalAlignment="Top" Width="100"/>
+                        <Label  FontSize="48" Grid.Column="0" Grid.Row="2" Content="{Binding BlackTimeLeft, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <Label  FontSize="72" Grid.Column="0" Grid.Row="1" Content="{Binding BlackScore, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                     </Grid>
                 </Border>
-                <Label x:Name="turn" Content="{Binding CurrentTurn, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="447.926,194,0,0" VerticalAlignment="Top" FontSize="16px" Grid.Column="1"/>
-            </Grid>
+                </Grid>
         </Viewbox>
     </DockPanel>
 </Window>

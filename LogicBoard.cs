@@ -169,12 +169,6 @@ namespace Othello
             throw new NotImplementedException();
         }
         
-        /*
-        public int getWhiteScore() => Board.Cast<Pawn>().Count(p => p?.Color == Pawn.Colors.White);
-
-        public int getBlackScore() => Board.Cast<Pawn>().Count(p => p?.Color == Pawn.Colors.Black);
-        */
-
         public int getWhiteScore() => (from pawn in Board.Cast<Pawn>()
                                         where pawn?.Color == Pawn.Colors.White
                                         select pawn).Count();
