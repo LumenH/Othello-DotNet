@@ -81,6 +81,9 @@ namespace Othello
 
                if(IsGameFinished())
                 {
+                    NotifyPropertyChanged("BlackScore");
+                    NotifyPropertyChanged("WhiteScore");
+                    NotifyPropertyChanged("CurrentTurn");
                     EndGame();
                 }
             };
@@ -116,15 +119,9 @@ namespace Othello
                     whitePlayer.stop();
                 }
 
-
-              /*  if (IsGameFinished())
-                {
-                    EndGame();
-                }*/
-
                 playerTurn++;
 
-                if (!CanPlayerPlay(playerTurn))
+                if (!CanPlayerPlay(playerTurn) && IsGameFinished())
                 {
                     playerTurn++;
                     System.Windows.MessageBox.Show("You can not play this turn");
@@ -197,28 +194,46 @@ namespace Othello
 
         public bool CanPlayerPlay(int playerTurn)
         {
-            return othelloBoard.Children.Cast<UIElement>()
+            return othelloBoard.Children
+                .Cast<UIElement>()
                 .ToList()
                 .Where(c => c is Rectangle)
                 .Cast<Rectangle>()
-                .ToList()
-                .Where(c => logicBoard.Board[Grid.GetRow(c), Grid.GetColumn(c)] == null) // Are there opened gaps ?
-                .Where(c => logicBoard.isPlayable(Grid.GetColumn(c), Grid.GetRow(c), playerTurn%2 != 0)).Count() > 0; //if yes, are they playable ?
+                .ToList() 
+                .Where(c => logicBoard.Board[Grid.GetRow(c), Grid.GetColumn(c)] == null)// Are there opened gaps ?
+                .Any(c => logicBoard.isPlayable(Grid.GetColumn(c), Grid.GetRow(c), playerTurn%2 != 0)); //if yes, are they playable ?
         }
 
         public void EndGame()
         {
             var winner = logicBoard.getWhiteScore() < logicBoard.getBlackScore() ? "Black" : "White";
             System.Windows.MessageBox.Show($"{winner} has won !", "End of game");
+
+
             mainTimer.Stop();
+
+            if (System.Windows.MessageBox.Show($"{winner} has won !\n Replay ?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
+            {
+
+                System.Windows.Application.Current.Shutdown();
+            }
+            else
+            {
+                RestartGame();
+            }
         }
 
-        public void RestartGame()
+        private void RestartGame()
         {
-
+            logicBoard.fillFakeBoard();
+            loadFromLogicBoard();
+            whitePlayer.reset();
+            blackPlayer.reset();
+            playerTurn = 0;
+            mainTimer.Start();
         }
 
-        public bool IsGameFinished()
+        private bool IsGameFinished()
         {
             return (!CanPlayerPlay(playerTurn) && !CanPlayerPlay(playerTurn + 1))
                 //|| logicBoard.Board.Cast<Pawn>().ToList().Count(p => p == null) == 0 

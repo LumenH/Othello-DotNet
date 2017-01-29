@@ -21,7 +21,7 @@ namespace Othello
     {
         string name;
         Pawn.Colors color;
-        TimeSpan maxTime = new TimeSpan(0, 1, 0);
+        TimeSpan maxTime = new TimeSpan(0, 30, 0);
         public TimeSpan timeLeft;
         private bool timeMoving = false;
 
@@ -91,6 +91,9 @@ namespace Othello
             color = (Colors)info.GetValue("Color", typeof(Colors));
             timeLeft = (TimeSpan)info.GetValue("TimeLeft", typeof(TimeSpan));
             timeMoving = (bool)info.GetValue("timeMoving", typeof(bool));
-        }   
+        }
+        
+
+        public void reset() => timeLeft = maxTime;
     }
 }
