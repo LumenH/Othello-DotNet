@@ -22,7 +22,7 @@ using System.Windows.Forms;
 namespace Othello
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction de la GUI
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
@@ -65,12 +65,14 @@ namespace Othello
         {
             InitializeComponent();
             
+            // Chargement du board
             logicBoard = new LogicBoard();
-            logicBoard.fillFakeBoard();
+            logicBoard.fillBoard();
             loadFromLogicBoard();
             DataContext = this;
             mainTimer = new DispatcherTimer {Interval = new TimeSpan(0, 0, 1)};
 
+            //Timer principale pour les 2 horloges
             mainTimer.Tick += (sender, args) =>
             {
                 whitePlayer.tick();
@@ -89,10 +91,14 @@ namespace Othello
             };
 
             mainTimer.Start();
-            
         }
         
-
+        /// <summary>
+        /// Event appeler lors du click de la souris sur le board.
+        /// Cette méthode check si le coup est jouable et l'applique.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mouseDown(object sender, MouseButtonEventArgs e)
         {
 
@@ -121,7 +127,7 @@ namespace Othello
 
                 playerTurn++;
 
-                if (!CanPlayerPlay(playerTurn) && IsGameFinished())
+                if (!CanPlayerPlay(playerTurn) && !IsGameFinished())
                 {
                     playerTurn++;
                     System.Windows.MessageBox.Show("You can not play this turn");
@@ -136,6 +142,9 @@ namespace Othello
             }
         }
 
+        /// <summary>
+        /// Met à jours le board GUI avec le board Logic
+        /// </summary>
         private void loadFromLogicBoard()
         {
             pawns.ForEach(p => othelloBoard.Children.Remove(p));
@@ -171,6 +180,11 @@ namespace Othello
             System.Windows.Application.Current.Shutdown();
         }
 
+        /// <summary>
+        /// Check lors du survol de la souris si le coup est jouable
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnBoardMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             var source = e.Source as Rectangle;
@@ -191,7 +205,11 @@ namespace Othello
                 .ForEach(c => c.Fill = c.Equals(rectHover) && playable ? playableColor : regularColor);    
         }
         
-
+        /// <summary>
+        /// Check si pour le joueur spécifié il reste un coup jouable
+        /// </summary>
+        /// <param name="playerTurn"></param>
+        /// <returns></returns>
         public bool CanPlayerPlay(int playerTurn)
         {
             return othelloBoard.Children
@@ -204,6 +222,9 @@ namespace Othello
                 .Any(c => logicBoard.isPlayable(Grid.GetColumn(c), Grid.GetRow(c), playerTurn%2 != 0)); //if yes, are they playable ?
         }
 
+        /// <summary>
+        /// Termine le jeu et demande si le joueur souhaite rejouer
+        /// </summary>
         public void EndGame()
         {
             var winner = logicBoard.getWhiteScore() < logicBoard.getBlackScore() ? "Black" : "White";
@@ -223,9 +244,12 @@ namespace Othello
             }
         }
 
+        /// <summary>
+        /// Redémarre le jeu
+        /// </summary>
         private void RestartGame()
         {
-            logicBoard.fillFakeBoard();
+            logicBoard.fillBoard();
             loadFromLogicBoard();
             whitePlayer.reset();
             blackPlayer.reset();
@@ -233,6 +257,10 @@ namespace Othello
             mainTimer.Start();
         }
 
+        /// <summary>
+        /// Est-ce le jeu est est terminé ?
+        /// </summary>
+        /// <returns></returns>
         private bool IsGameFinished()
         {
             return (!CanPlayerPlay(playerTurn) && !CanPlayerPlay(playerTurn + 1))
@@ -247,6 +275,12 @@ namespace Othello
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        /// <summary>
+        /// Sauvegarde de la partie courante (Sérialisation)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveClick(object sender, RoutedEventArgs e)
         {
 
@@ -283,6 +317,11 @@ namespace Othello
             
         }
 
+        /// <summary>
+        /// Chargement d'une partie sérlialisée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void loadClick(object sender, RoutedEventArgs e)
         {
             save = null;
@@ -326,7 +365,6 @@ namespace Othello
             {
                 System.Windows.MessageBox.Show("Chargement échoué, pas de fichier spécifié");
             }
-           
         }
     }
 }
